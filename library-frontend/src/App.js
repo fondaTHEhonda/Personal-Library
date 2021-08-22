@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Results from './Components/Results'
+import Header from './Components/Header'
+import SearchForm from './Components/SearchForm'
+import Library from './Components/Library'
 
 function App() {
   const [ books, setBooks ] = useState([])
@@ -21,23 +24,20 @@ function App() {
 
   const handleSelect = (event) => {
     setSelected(event.target.id)
+
+    const singleBook = books.filter(book => {
+      return book.id.includes(selected)
+    })
+
+    console.log(singleBook)
   }
 
   return (
     <div >
-      <div id='header'>
-        <h1>Personal Library</h1>
-      </div>
-      <div id='search-container'>
-        <form id='book-search-form' onSubmit={handleSubmit}>
-          <input type='text' onChange={handleSearch}></input>
-          <button type='submit'>Search Books</button>
-        </form>
-      </div>
+      <Header/>
+      <SearchForm handleSearch={handleSearch} handleSubmit={handleSubmit} />
       <Results books={books} handleSelect={handleSelect} />
-      <div id='user-library'>
-        <h2>My Library</h2>
-      </div>
+      <Library />
     </div>
   );
 }
